@@ -1,6 +1,9 @@
+import java.util.Arrays;
+
 public class Cards {
 
-    public void  duplicates(String[] arr)
+
+    public int[] duplicates(String[] arr)
     {
         String[] cards = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
         int[] counts = new int[13];
@@ -15,6 +18,7 @@ public class Cards {
             }
             counts[i] = count;
         }
+        return counts;
     }
 
 }

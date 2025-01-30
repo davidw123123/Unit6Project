@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-
+        Cards cards = new Cards();
 
         // step 1: create a file object
         File f = new File("src/input_file");
@@ -32,12 +32,15 @@ public class Main {
                 stringNumbers[i] =  fileArray[i].substring(0,  fileArray[i].indexOf("|"));
             }
             System.out.println(Arrays.toString(stringNumbers));
-            String[] stringNumber = new String[stringNumbers.length];
-            for (int i=0; i < stringNumbers.length; i++) {
-                stringNumber[i] = Arrays.toString(stringNumbers[i].split(" "));
-            }
-            System.out.println(Arrays.toString(stringNumber));
-            System.out.println(stringNumber[0]);
+            String [] test = stringNumbers[0].split(",");
+            System.out.println(Arrays.toString(test));
+            System.out.println(Arrays.toString(cards.duplicates(test)));
+//            String[] stringNumber = new String[stringNumbers.length];
+//            for (int i=0; i < stringNumbers.length; i++) {
+//                stringNumber[i] = Arrays.toString(stringNumbers[i].split(" "));
+//            }
+//            System.out.println(Arrays.toString(stringNumber));
+//            System.out.println(stringNumber[0]);
         }
         catch (FileNotFoundException fe) {
             System.out.println("File was not found");
