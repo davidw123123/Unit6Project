@@ -27,27 +27,6 @@ public class Cards {
         return counts;
     }
 
-    public String[] setHandArrayList(String[] arr)
-    {
-        String[] stringNumbers = new String[arr.length];
-
-        for (int i=0; i < arr.length; i++) {
-            // split by space, now we have a list of String numbers
-            stringNumbers[i] = Arrays.toString(arr[i].split(" "));
-        }
-
-        for (int i=0; i < arr.length; i++) {
-            // removes |
-            stringNumbers[i] =  arr[i].substring(0,  arr[i].indexOf("|"));
-        }
-
-        for (String str : stringNumbers)
-        {
-//            if duplicates(str)
-        }
-        return stringNumbers;
-    }
-
     public int fiveOfAKind(int[] arr)
     {
         int count = 0;
@@ -189,6 +168,61 @@ public class Cards {
         return "Number of five of a kind hands: " + five + "\n" + "Number of full house hands: " + full + "\n" + "Number of four of a kind hands: " + four + "\n" + "Number of three of a kind hands: " + three + "\n" + "Number of two pair hands: " + two + "\n" + "Number of one pair hands: " + one + "\n" + "Number of high card hands: " + high;
 
 
+    }
+    //part 2
+//    public String[] setHandArrayList(String[] str, int[] arr)
+//    {
+//        String[] stringNumbers = new String[arr.length];
+//
+//        for (int i=0; i < arr.length; i++) {
+//            // split by space, now we have a list of String numbers
+//            stringNumbers[i] = Arrays.toString(str[i].split(" "));
+//        }
+//
+//        for (int i=0; i < arr.length; i++) {
+//            // removes |
+//            stringNumbers[i] =  str[i].substring(0,  str[i].indexOf("|"));
+//        }
+//        for (int i = 0; i < str.length; i ++)
+//        {
+//            if (fiveOfAKind(duplicates(stringNumbers[i]))==1)
+//            {
+//                fiveCard.add(stringNumbers[i]);
+//            } else if (fourCard(duplicates(stringNumbers[i]))==1)
+//            {
+//                fourCard.add(stringNumbers[i]);
+//            } else if (fullHouse(duplicates(stringNumbers[i]))==1)
+//            {
+//                fullHouse.add(stringNumbers[i]);
+//            } else if (threeOfAKind(duplicates(stringNumbers[i]))==1)
+//            {
+//                three.add(stringNumbers[i]);
+//            } else if (twoPair(duplicates(stringNumbers[i]))==1)
+//            {
+//                twoPair.add(stringNumbers[i]);
+//            }else if (onePair(duplicates(stringNumbers[i]))==1)
+//            {
+//                onePair.add(stringNumbers[i]);
+//            } else
+//                high.add(stringNumbers[i]);
+//        }
+//        return stringNumbers;
+//    }
+    public String singleDuplicates(String arr)
+    {
+        String[] cards = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
+        int[] counts = new int[13];
+        for (int i = 0; i < cards.length; i++)
+        {
+            int count = 0;
+            for (int j = 0; j < arr.length(); j ++) {
+                if (cards[i].equals(arr.substring(arr.indexOf(",")))) {
+                    count++;
+                }
+            }
+            counts[i] = count;
+        }
+        return Arrays.toString(counts);
     }
 }
 

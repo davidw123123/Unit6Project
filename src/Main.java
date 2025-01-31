@@ -9,14 +9,8 @@ import java.util.Arrays;
 public class Main {
     public static void main(String[] args) {
         Cards cards = new Cards();
-
-
         // step 1: create a file object
         File f = new File("src/input_file");
-
-
-
-
         String fileData = "";
         try {
             Scanner s = new Scanner(f);
