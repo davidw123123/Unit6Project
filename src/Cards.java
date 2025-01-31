@@ -1,4 +1,15 @@
+import java.util.ArrayList;
+import java.util.Arrays;
+
 public class Cards {
+    ArrayList<String> fiveCard = new ArrayList<>(100000000);
+    ArrayList<String> fourCard = new ArrayList<>(100000000);
+    ArrayList<String> fullHouse = new ArrayList<>(100000000);
+    ArrayList<String> three = new ArrayList<>(100000000);
+    ArrayList<String> twoPair = new ArrayList<>(100000000);
+    ArrayList<String> onePair = new ArrayList<>(100000000);
+    ArrayList<String> high = new ArrayList<>(100000000);
+
     public int[] duplicates(String[] arr)
     {
         String[] cards = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
@@ -16,6 +27,26 @@ public class Cards {
         return counts;
     }
 
+    public String[] setHandArrayList(String[] arr)
+    {
+        String[] stringNumbers = new String[arr.length];
+
+        for (int i=0; i < arr.length; i++) {
+            // split by space, now we have a list of String numbers
+            stringNumbers[i] = Arrays.toString(arr[i].split(" "));
+        }
+
+        for (int i=0; i < arr.length; i++) {
+            // removes |
+            stringNumbers[i] =  arr[i].substring(0,  arr[i].indexOf("|"));
+        }
+
+        for (String str : stringNumbers)
+        {
+//            if duplicates(str)
+        }
+        return stringNumbers;
+    }
 
     public int fiveOfAKind(int[] arr)
     {

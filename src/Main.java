@@ -29,12 +29,12 @@ public class Main {
             String[] stringNumbers = new String[fileArray.length];
 
             for (int i=0; i < fileArray.length; i++) {
-                // removes |
+                // split by space, now we have a list of String numbers
                 stringNumbers[i] = Arrays.toString(fileArray[i].split(" "));
             }
 
             for (int i=0; i < fileArray.length; i++) {
-                // split by space, now we have a list of String numbers
+                // removes |
                 stringNumbers[i] =  fileArray[i].substring(0,  fileArray[i].indexOf("|"));
             }
             //part one
