@@ -169,60 +169,94 @@ public class Cards {
 
 
     }
+    public String[] setHand(String str) {
+        String[] fileArray = str.split("\n");
+        String[] stringHand = new String[fileArray.length];
+
+        for (int i = 0; i < fileArray.length; i++) {
+            // split by space, now we have a list of String numbers
+            stringHand[i] = Arrays.toString(fileArray[i].split(" "));
+        }
+
+        for (int i = 0; i < fileArray.length; i++) {
+            // removes |
+            stringHand[i] = fileArray[i].substring(0, fileArray[i].indexOf("|"));
+        }
+        return stringHand;
+    }
+
     //part 2
-//    public String[] setHandArrayList(String[] str, int[] arr)
-//    {
-//        String[] stringNumbers = new String[arr.length];
-//
-//        for (int i=0; i < arr.length; i++) {
-//            // split by space, now we have a list of String numbers
-//            stringNumbers[i] = Arrays.toString(str[i].split(" "));
-//        }
-//
-//        for (int i=0; i < arr.length; i++) {
-//            // removes |
-//            stringNumbers[i] =  str[i].substring(0,  str[i].indexOf("|"));
-//        }
-//        for (int i = 0; i < str.length; i ++)
-//        {
-//            if (fiveOfAKind(duplicates(stringNumbers[i]))==1)
-//            {
-//                fiveCard.add(stringNumbers[i]);
-//            } else if (fourCard(duplicates(stringNumbers[i]))==1)
-//            {
-//                fourCard.add(stringNumbers[i]);
-//            } else if (fullHouse(duplicates(stringNumbers[i]))==1)
-//            {
-//                fullHouse.add(stringNumbers[i]);
-//            } else if (threeOfAKind(duplicates(stringNumbers[i]))==1)
-//            {
-//                three.add(stringNumbers[i]);
-//            } else if (twoPair(duplicates(stringNumbers[i]))==1)
-//            {
-//                twoPair.add(stringNumbers[i]);
-//            }else if (onePair(duplicates(stringNumbers[i]))==1)
-//            {
-//                onePair.add(stringNumbers[i]);
-//            } else
-//                high.add(stringNumbers[i]);
-//        }
-//        return stringNumbers;
-//    }
-    public String singleDuplicates(String arr)
+    public void setHandArrayList(String str)
+    {
+        String[] stringNumbers = setHand(str);
+        for (int i = 0; i < stringNumbers.length; i ++)
+        {
+            if (fiveOfAKind(singleDuplicates(stringNumbers[i]))==1)
+            {
+                fiveCard.add(stringNumbers[i]);
+            } else if (fourOfAKind(singleDuplicates(stringNumbers[i]))==1)
+            {
+                fourCard.add(stringNumbers[i]);
+            } else if (fullHouse(singleDuplicates(stringNumbers[i]))==1)
+            {
+                fullHouse.add(stringNumbers[i]);
+            } else if (threeOfAKind(singleDuplicates(stringNumbers[i]))==1)
+            {
+                three.add(stringNumbers[i]);
+            } else if (twoPair(singleDuplicates(stringNumbers[i]))==1)
+            {
+                twoPair.add(stringNumbers[i]);
+            }else if (onePair(singleDuplicates(stringNumbers[i]))==1)
+            {
+                onePair.add(stringNumbers[i]);
+            } else
+                high.add(stringNumbers[i]);
+        }
+    }
+    public int[] singleDuplicates(String singleDeck)
     {
         String[] cards = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
         int[] counts = new int[13];
+        String[] temp = singleDeck.split(",");
         for (int i = 0; i < cards.length; i++)
         {
             int count = 0;
-            for (int j = 0; j < arr.length(); j ++) {
-                if (cards[i].equals(arr.substring(arr.indexOf(",")))) {
+            for (int j = 0; j < temp.length; j ++) {
+                if (cards[i].equals(temp[j])) {
                     count++;
                 }
             }
             counts[i] = count;
         }
-        return Arrays.toString(counts);
+        return counts;
+    }
+
+    public ArrayList<String> getFiveCard() {
+        return fiveCard;
+    }
+
+    public ArrayList<String> getFourCard() {
+        return fourCard;
+    }
+
+    public ArrayList<String> getFullHouse() {
+        return fullHouse;
+    }
+
+    public ArrayList<String> getThree() {
+        return three;
+    }
+
+    public ArrayList<String> getTwoPair() {
+        return twoPair;
+    }
+
+    public ArrayList<String> getOnePair() {
+        return onePair;
+    }
+
+    public ArrayList<String> getHigh() {
+        return high;
     }
 }
 

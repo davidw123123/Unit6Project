@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -19,28 +20,17 @@ public class Main {
                 fileData += currentLine + "\n";
             }
             // a String array where every item in the array is a line from the file
-            String[] fileArray = fileData.split("\n");
-            String[] stringNumbers = new String[fileArray.length];
-
-            for (int i=0; i < fileArray.length; i++) {
-                // split by space, now we have a list of String numbers
-                stringNumbers[i] = Arrays.toString(fileArray[i].split(" "));
-            }
-
-            for (int i=0; i < fileArray.length; i++) {
-                // removes |
-                stringNumbers[i] =  fileArray[i].substring(0,  fileArray[i].indexOf("|"));
-            }
+            String[] stringNumbers = cards.setHand(fileData);
+            System.out.println(Arrays.toString(stringNumbers));
             //part one
             System.out.println(cards.hands(stringNumbers));
+            //part two
+            cards.setHandArrayList(fileData);
+            System.out.println(cards.getFourCard());
         }
         catch (FileNotFoundException fe) {
             System.out.println("File was not found");
             System.exit(1);
         }
-
-
-
-
     }
 }
