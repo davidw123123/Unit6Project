@@ -2,14 +2,21 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Cards {
-    ArrayList<String> fiveCard = new ArrayList<>(100000000);
-    ArrayList<String> fourCard = new ArrayList<>(100000000);
-    ArrayList<String> fullHouse = new ArrayList<>(100000000);
-    ArrayList<String> three = new ArrayList<>(100000000);
-    ArrayList<String> twoPair = new ArrayList<>(100000000);
-    ArrayList<String> onePair = new ArrayList<>(100000000);
-    ArrayList<String> high = new ArrayList<>(100000000);
-
+    ArrayList<String> fiveCard = new ArrayList<>();
+    ArrayList<String> fourCard = new ArrayList<>();
+    ArrayList<String> fullHouse = new ArrayList<>();
+    ArrayList<String> three = new ArrayList<>();
+    ArrayList<String> twoPair = new ArrayList<>();
+    ArrayList<String> onePair = new ArrayList<>();
+    ArrayList<String> high = new ArrayList<>();
+    ArrayList<Integer> fiveCardBidValue = new ArrayList<>();
+    ArrayList<Integer> fourCardBidValue = new ArrayList<>();
+    ArrayList<Integer> fullHouseBidValue = new ArrayList<>();
+    ArrayList<Integer> threeBidValue = new ArrayList<>();
+    ArrayList<Integer> twoPairBidValue = new ArrayList<>();
+    ArrayList<Integer> onePairBidValue = new ArrayList<>();
+    ArrayList<Integer> highBidValue = new ArrayList<>();
+    int [] bidValue = new int[50];
     public int[] duplicates(String[] arr)
     {
         String[] cards = {"Ace", "King", "Queen", "Jack", "10", "9", "8", "7", "6", "5", "4", "3", "2"};
@@ -169,6 +176,19 @@ public class Cards {
 
 
     }
+    public void setBidValue(String str)
+    {
+        String[] temp = str.split("\n");
+        for (int i = 0; i < temp.length; i ++)
+        {
+            bidValue[i] = Integer.parseInt(temp[i].substring(temp[i].indexOf("|")+1));
+        }
+    }
+
+    public ArrayList<Integer> getBidValue() {
+        return fourCardBidValue;
+    }
+
     public String[] setHand(String str) {
         String[] fileArray = str.split("\n");
         String[] stringHand = new String[fileArray.length];
@@ -189,28 +209,28 @@ public class Cards {
     public void setHandArrayList(String str)
     {
         String[] stringNumbers = setHand(str);
-        for (int i = 0; i < stringNumbers.length; i ++)
-        {
-            if (fiveOfAKind(singleDuplicates(stringNumbers[i]))==1)
-            {
+        for (int i = 0; i < stringNumbers.length; i ++) {
+            if (fiveOfAKind(singleDuplicates(stringNumbers[i])) == 1) {
                 fiveCard.add(stringNumbers[i]);
-            } else if (fourOfAKind(singleDuplicates(stringNumbers[i]))==1)
-            {
+                fiveCardBidValue.add(bidValue[i]);
+            } else if (fourOfAKind(singleDuplicates(stringNumbers[i])) == 1) {
                 fourCard.add(stringNumbers[i]);
-            } else if (fullHouse(singleDuplicates(stringNumbers[i]))==1)
-            {
+                fourCardBidValue.add(bidValue[i]);
+            } else if (fullHouse(singleDuplicates(stringNumbers[i])) == 1) {
                 fullHouse.add(stringNumbers[i]);
-            } else if (threeOfAKind(singleDuplicates(stringNumbers[i]))==1)
-            {
+                fullHouseBidValue.add(bidValue[i]);
+            } else if (threeOfAKind(singleDuplicates(stringNumbers[i])) == 1) {
                 three.add(stringNumbers[i]);
-            } else if (twoPair(singleDuplicates(stringNumbers[i]))==1)
-            {
+                threeBidValue.add(bidValue[i]);
+            } else if (twoPair(singleDuplicates(stringNumbers[i])) == 1) {
                 twoPair.add(stringNumbers[i]);
-            }else if (onePair(singleDuplicates(stringNumbers[i]))==1)
-            {
+                twoPairBidValue.add(bidValue[i]);
+            } else if (onePair(singleDuplicates(stringNumbers[i])) == 1) {
                 onePair.add(stringNumbers[i]);
+                onePairBidValue.add(bidValue[i]);
             } else
                 high.add(stringNumbers[i]);
+            highBidValue.add(bidValue[i]);
         }
     }
     public int[] singleDuplicates(String singleDeck)
@@ -221,8 +241,8 @@ public class Cards {
         for (int i = 0; i < cards.length; i++)
         {
             int count = 0;
-            for (int j = 0; j < temp.length; j ++) {
-                if (cards[i].equals(temp[j])) {
+            for (String s : temp) {
+                if (cards[i].equals(s)) {
                     count++;
                 }
             }
@@ -258,5 +278,6 @@ public class Cards {
     public ArrayList<String> getHigh() {
         return high;
     }
-}
 
+
+}

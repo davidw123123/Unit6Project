@@ -19,14 +19,17 @@ public class Main {
                 String currentLine = s.nextLine();
                 fileData += currentLine + "\n";
             }
+
             // a String array where every item in the array is a line from the file
             String[] stringNumbers = cards.setHand(fileData);
             System.out.println(Arrays.toString(stringNumbers));
             //part one
             System.out.println(cards.hands(stringNumbers));
             //part two
+            cards.setBidValue(fileData);
             cards.setHandArrayList(fileData);
             System.out.println(cards.getFourCard());
+            System.out.println(cards.getBidValue());
         }
         catch (FileNotFoundException fe) {
             System.out.println("File was not found");
