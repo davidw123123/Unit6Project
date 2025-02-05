@@ -1,4 +1,3 @@
-import java.sql.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -10,7 +9,8 @@ public class Cards {
     ArrayList<String> twoPair = new ArrayList<>();
     ArrayList<String> onePair = new ArrayList<>();
     ArrayList<String> high = new ArrayList<>();
-    ArrayList<String> all = new ArrayList<>();
+    ArrayList<String> sortedHands = new ArrayList<>();
+    ArrayList<Integer> sortedBids = new ArrayList<>();
     ArrayList<Integer> fiveCardBidValue = new ArrayList<>();
     ArrayList<Integer> fourCardBidValue = new ArrayList<>();
     ArrayList<Integer> fullHouseBidValue = new ArrayList<>();
@@ -123,19 +123,6 @@ public class Cards {
         return count;
     }
 
-    public int highCard(int[] arr) {
-        int count = 0;
-        for (int numbers : arr) {
-            if (numbers == 1) {
-                count++;
-            }
-        }
-        if (count != 5) {
-            count = 0;
-        } else count = 1;
-        return count;
-    }
-
     public String hands(String[] arr) {
         int five = 0;
         int four = 0;
@@ -174,10 +161,6 @@ public class Cards {
         for (int i = 0; i < temp.length; i++) {
             bidValue[i] = Integer.parseInt(temp[i].substring(temp[i].indexOf("|") + 1));
         }
-    }
-
-    public ArrayList<Integer> getBidValue() {
-        return fourCardBidValue;
     }
 
     public String[] setHand(String str) {
@@ -240,101 +223,92 @@ public class Cards {
         return counts;
     }
 
-    public String strongerDeck(String deck1, String deck2)
-    {
+    public String strongerDeck(String deck1, String deck2) {
         String[] tempDeck1 = deck1.split(",");
         String[] tempDeck2 = deck2.split(",");
-        for (int i = 0; i < tempDeck1.length; i++)
-        {
-            for (int j = 0; j < tempDeck2.length; j ++)
-            {
-                if (cardStrength(tempDeck1[i]) > cardStrength(tempDeck2[j]))
-                {
-                    return deck1;
-                } else if (cardStrength(tempDeck1[i]) < cardStrength(tempDeck2[j]))
-                {
-                    return deck2;
-                }
-            }
-        }
-        return "Same";
-    }
-    public void sortHand(ArrayList list, ArrayList bid)
-    {
-        for (int i = 0; i < list.size(); i ++) {
-            for (int j = 1; j < list.size(); j++) {
-                String stronger = strongerDeck(list.get(i).toString(), list.get(j).toString());
-                if (stronger.equals(list.get(j).toString()))
-                {
-                    String temp = list.get(i).toString();
-                    list.set(i, list.get(j));
-                    list.set(j, temp);
 
-                    int tempBid = Integer.parseInt(bid.get(i).toString());
-                    bid.set(i, bid.get(j));
-                    bid.set(j, tempBid);
+        for (int i = 0; i < tempDeck1.length; i++) {
+            int strength1 = cardStrength(tempDeck1[i]);
+            int strength2 = cardStrength(tempDeck2[i]);
+
+            if (strength1 > strength2) {
+                return deck1;
+            } else if (strength1 < strength2) {
+                return deck2;
+            }
+        }
+        return "same";
+    }
+    public void sortHand(ArrayList<String> list, ArrayList<Integer> bid) {
+        int n = list.size();
+
+        for (int i = 0; i < n - 1; i++) {
+            for (int j = 0; j < n - i - 1; j++) {
+                String stronger = strongerDeck(list.get(j), list.get(j + 1));
+
+                if (stronger.equals(list.get(j + 1))) {
+                    String tempHand = list.get(j);
+                    list.set(j, list.get(j + 1));
+                    list.set(j + 1, tempHand);
+
+                    int tempBid = bid.get(j);
+                    bid.set(j, bid.get(j + 1));
+                    bid.set(j + 1, tempBid);
                 }
             }
         }
     }
-//    public String calculateBidValue()
-//    {
-//        int[] bidAmount = new int[50];
-//        for (int i = 0; i < high.size(); i ++)
-//        {
-//
-//        }
-//    }
-//    public void allSort()
-//    {
-//        sortHand(high, high);
-//    }
-    public int cardStrength(String card)
-    {
-        if (card.equals("Ace"))
-        {
+    public void sortAllHands() {
+        //sorts hand
+        sortHand(fiveCard, fiveCardBidValue);
+        sortHand(fourCard, fourCardBidValue);
+        sortHand(fullHouse, fullHouseBidValue);
+        sortHand(three, threeBidValue);
+        sortHand(twoPair, twoPairBidValue);
+        sortHand(onePair, onePairBidValue);
+        sortHand(high, highBidValue);
+        //adds hand to list
+        sortedHands.addAll(fiveCard);
+        sortedBids.addAll(fiveCardBidValue);
+        sortedHands.addAll(fourCard);
+        sortedBids.addAll(fourCardBidValue);
+        sortedHands.addAll(fullHouse);
+        sortedBids.addAll(fullHouseBidValue);
+        sortedHands.addAll(three);
+        sortedBids.addAll(threeBidValue);
+        sortedHands.addAll(twoPair);
+        sortedBids.addAll(twoPairBidValue);
+        sortedHands.addAll(onePair);
+        sortedBids.addAll(onePairBidValue);
+        sortedHands.addAll(high);
+        sortedBids.addAll(highBidValue);
+    }
+    public int calculateBidValue() {
+        int totalValue = 0;
+        int numHands = sortedHands.size();
+
+        for (int i = 0; i < numHands; i++) {
+            int rank = numHands - i;
+            int bid = sortedBids.get(i);
+            totalValue += rank * bid;
+        }
+        return totalValue;
+    }
+
+    public int cardStrength(String card) {
+        if (card.equals("Ace")) {
             return 14;
         }
-        if (card.equals("King"))
-        {
+        if (card.equals("King")) {
             return 13;
         }
-        if (card.equals("Queen"))
-        {
+        if (card.equals("Queen")) {
             return 12;
         }
-        if (card.equals("Jack"))
-        {
+        if (card.equals("Jack")) {
             return 11;
         }
         return Integer.parseInt(card);
-    }
-    public ArrayList<String> getFiveCard() {
-        return fiveCard;
-    }
-
-    public ArrayList<String> getFourCard() {
-        return fourCard;
-    }
-
-    public ArrayList<String> getFullHouse() {
-        return fullHouse;
-    }
-
-    public ArrayList<String> getThree() {
-        return three;
-    }
-
-    public ArrayList<String> getTwoPair() {
-        return twoPair;
-    }
-
-    public ArrayList<String> getOnePair() {
-        return onePair;
-    }
-
-    public ArrayList<String> getHigh() {
-        return high;
     }
 
 
